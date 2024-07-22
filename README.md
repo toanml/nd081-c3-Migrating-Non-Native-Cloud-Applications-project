@@ -72,8 +72,9 @@ Complete a month cost analysis of each Azure resource to give an estimate total 
 ## Architecture Explanation
 There are 4 primary parts for this architect, they are a PostgreSQL database, a webapp, a service bus queue, and a service bus trigger function app.
 The POSTGRES database is used for persisting data: attendee, conference, notification
-The webapp is used for displaying: homepage, list of attendees, list of notifications and send a notification.
+The webapp is used for displaying: homepage, list of attendees, list of notifications and send a notification. The web app is under F1 (Free tier) App Service Plan, because F1 is cost-effectiveness as it provides 60 minutes of compute per day at no cost.
 The service bus queue is used for decoupling the updating of data from sending out notification emails.
+The trigger function is belong to a Consumption (serverless) Function App plan, it can scales automatically and is charged for compute resource when it is running. It is cost-effectiveness in development stage.
 It works as follows: 
 * An administrator fills subject and message which want to send to conference participants (by querying attendees in database).
 * This kicks off two things: the database is updated and a message is placed on the queue
